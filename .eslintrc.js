@@ -31,6 +31,8 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 0,
+    'react/require-default-props': 0,
+    'react/no-unused-prop-types': 0,
     'react/jsx-filename-extension': [0],
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never', jsx: 'never', ts: 'never', tsx: 'never', json: 'never',

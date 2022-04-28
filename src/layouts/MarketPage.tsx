@@ -2,10 +2,12 @@ import React, { Suspense } from 'react';
 import { Bounds, OrbitControls, ContactShadows } from '@react-three/drei';
 import { ModelController } from '../components/ModelController';
 import { Model } from '../components/Model';
+import { Header } from '../components/Header';
 
 export function MarketPage() {
   return (
     <>
+      <Header />
       <spotLight position={[-100, -100, -100]} intensity={0.2} angle={0.3} penumbra={1} />
       <hemisphereLight color="white" groundColor="#ff0f00" position={[-10, 30, 10]} intensity={1} />
       <Suspense fallback={null}>

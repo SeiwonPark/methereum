@@ -1,15 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import { Html } from '@react-three/drei';
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button,
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,
 } from '@mui/material';
 import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
-import { CloseButton } from './CloseButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Wallet } from './Wallet';
 import { useStore } from '../hooks/useStore';
 
-// FIXME: NEEDS TO BE FIXED
 export interface DialogWindowProps {
   handleClose: (e?: MouseEvent | undefined) => void
 }
@@ -45,7 +44,25 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogActions disableSpacing>
-          <CloseButton handleClose={handleClose} />
+          <IconButton
+            sx={{
+              width: 40,
+              height: 40,
+              cursor: 'pointer',
+              color: 'var(--subPrimary)',
+            }}
+            onClick={() => handleClose()}
+            color="primary"
+          >
+            <CancelIcon
+              id="modal-button-close"
+              fontSize="large"
+              sx={{
+                backgroundColor: 'white',
+                borderRadius: '100%',
+              }}
+            />
+          </IconButton>
         </DialogActions>
         <DialogTitle
           id="scroll-dialog-title"

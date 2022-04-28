@@ -4,7 +4,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Button, Avatar } from '@mui/material';
 import { useEagerConnect } from '../hooks/useEagerConnect';
 import { connectorList } from '../utils/Connectors';
-import { AddressTooltip } from './AddressTooltip';
+import { AccountTooltip } from './AccountTooltip';
 
 type ConnectorName = 'MetaMask';
 
@@ -31,10 +31,15 @@ export function Wallet() {
   useEffect(() => {}, [active]);
 
   return (
-    <div className="connect-wallet">
+    <div
+      className="connect-wallet"
+      style={{
+        padding: '1rem',
+      }}
+    >
       {active && (
         <div>
-          <AddressTooltip />
+          <AccountTooltip />
           <Button
             size="large"
             variant="contained"
