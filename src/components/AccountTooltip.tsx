@@ -13,6 +13,7 @@ export function AccountTooltip() {
   const { account, chainId } = useWeb3React<Web3Provider>();
 
   const changeTitle = async () => {
+    /** React v18 makes it not to re-render */
     setTitle('Copied!');
     setTimeout(() => {
       setTitle('Copy to clipboard');

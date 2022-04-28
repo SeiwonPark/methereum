@@ -1,10 +1,8 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import styled from 'styled-components';
+import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-
 
 declare global {
   interface Window {
@@ -12,16 +10,7 @@ declare global {
   }
 }
 
-const AppContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
-
-createRoot(document.getElementById('root') as HTMLElement).render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(<App />);
 
 reportWebVitals();
