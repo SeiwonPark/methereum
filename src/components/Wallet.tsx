@@ -2,17 +2,18 @@ import React, { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { Button, Avatar } from '@mui/material';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { useEagerConnect } from '../hooks/useEagerConnect';
 import { connectorList } from '../utils/Connectors';
-import { AccountTooltip } from './AccountTooltip';
+import { WalletAccount } from './WalletAccount';
 
-type ConnectorName = 'MetaMask';
+const queryClient = new QueryClient();
 
 export function Wallet() {
   const { active, activate, deactivate } = useWeb3React<Web3Provider>();
   const eagerConnect = useEagerConnect();
 
-  const handleClick = (connectorName: ConnectorName) => {
+  const handleClick = (connectorName: 'MetaMask') => {
     try {
       activate(connectorList[connectorName]);
     } catch (err) {
@@ -39,7 +40,9 @@ export function Wallet() {
     >
       {active && (
         <div>
-          <AccountTooltip />
+          <QueryClientProvider client={queryClient}>
+            <WalletAccount />
+          </QueryClientProvider>
           <Button
             size="large"
             variant="contained"

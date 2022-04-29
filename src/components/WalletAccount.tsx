@@ -1,19 +1,22 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Avatar, IconButton, Tooltip, TooltipProps, Typography, Zoom,
 } from '@mui/material';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { useQuery } from 'react-query';
 import { networkChainId } from '../utils/Connectors';
 
-export function AccountTooltip() {
+export function WalletAccount() {
   const [title, setTitle] = useState('Copy to clipboard');
   const ref = useRef<TooltipProps>();
-  const { account, chainId } = useWeb3React<Web3Provider>();
+  const { account, chainId, library } = useWeb3React<Web3Provider>();
+
+  // const { data: balance } = useQuery(['getBalance', account, 'latest']);
 
   const changeTitle = async () => {
-    /** React v18 makes it not to re-render */
+    // FIXME: it re-renders... any better ideas?
     setTitle('Copied!');
     setTimeout(() => {
       setTitle('Copy to clipboard');
