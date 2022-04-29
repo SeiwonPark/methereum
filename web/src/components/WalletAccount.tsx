@@ -1,19 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
+import useSWR from 'swr';
+import { ethers } from 'ethers';
 import {
   Avatar, IconButton, Tooltip, TooltipProps, Typography, Zoom,
 } from '@mui/material';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { useQuery } from 'react-query';
 import { networkChainId } from '../utils/Connectors';
 
 export function WalletAccount() {
   const [title, setTitle] = useState('Copy to clipboard');
   const ref = useRef<TooltipProps>();
-  const { account, chainId, library } = useWeb3React<Web3Provider>();
-
-  // const { data: balance } = useQuery(['getBalance', account, 'latest']);
+  const {
+    active, account, chainId, library,
+  } = useWeb3React<Web3Provider>();
+  const [ethBalance, setEthBalance] = useState<string>('0.0');
 
   const changeTitle = async () => {
     // FIXME: it re-renders... any better ideas?
@@ -31,6 +33,21 @@ export function WalletAccount() {
       console.log(e);
     }
   };
+
+  const fetcher = (_library: any) => (...args: any) => {
+    const [method, ...params] = args;
+    return _library[method](...params);
+  };
+
+  const { data: balance } = useSWR(['getBalance', account, 'latest'], {
+    fetcher: fetcher(library),
+  });
+
+  useEffect(() => {
+    if (active && balance !== undefined) {
+      setEthBalance(ethers.utils.formatEther(balance));
+    }
+  }, [active, balance]);
 
   return (
     <div
@@ -61,6 +78,30 @@ export function WalletAccount() {
         <Typography variant="h6" component="h2">
           {networkChainId[chainId as number]}
           (Current Network)
+        </Typography>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingTop: '0.5rem',
+          paddingBottom: '0.5rem',
+        }}
+      >
+        <img
+          alt="network-name"
+          src="/ethereum-logo.png"
+          style={{
+            height: 30,
+            marginLeft: '0.4rem',
+            marginRight: '1.2rem',
+          }}
+        />
+        <Typography variant="h6" component="h2">
+          {ethBalance}
+          {' '}
+          ETH
         </Typography>
       </div>
       <div

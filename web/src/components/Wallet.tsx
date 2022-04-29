@@ -2,12 +2,9 @@ import React, { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { Button, Avatar } from '@mui/material';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { useEagerConnect } from '../hooks/useEagerConnect';
 import { connectorList } from '../utils/Connectors';
 import { WalletAccount } from './WalletAccount';
-
-const queryClient = new QueryClient();
 
 export function Wallet() {
   const { active, activate, deactivate } = useWeb3React<Web3Provider>();
@@ -40,9 +37,7 @@ export function Wallet() {
     >
       {active && (
         <div>
-          <QueryClientProvider client={queryClient}>
-            <WalletAccount />
-          </QueryClientProvider>
+          <WalletAccount />
           <Button
             size="large"
             variant="contained"
