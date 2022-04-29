@@ -4,7 +4,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Button, Avatar } from '@mui/material';
 import { useEagerConnect } from '../hooks/useEagerConnect';
 import { connectorList } from '../utils/Connectors';
-import { WalletAccount } from './WalletAccount';
+import { WalletInfo } from './WalletInfo';
 
 export function Wallet() {
   const { active, activate, deactivate } = useWeb3React<Web3Provider>();
@@ -37,7 +37,7 @@ export function Wallet() {
     >
       {active && (
         <div>
-          <WalletAccount />
+          <WalletInfo />
           <Button
             size="large"
             variant="contained"

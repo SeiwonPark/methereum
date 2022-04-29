@@ -9,7 +9,7 @@ import { useWeb3React } from '@web3-react/core';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { networkChainId } from '../utils/Connectors';
 
-export function WalletAccount() {
+export function WalletInfo() {
   const [title, setTitle] = useState('Copy to clipboard');
   const ref = useRef<TooltipProps>();
   const {
@@ -99,7 +99,7 @@ export function WalletAccount() {
           }}
         />
         <Typography variant="h6" component="h2">
-          {ethBalance}
+          {parseFloat(ethBalance).toPrecision(8)}
           {' '}
           ETH
         </Typography>
