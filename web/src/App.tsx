@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { LandingPage } from './layouts/LandingPage';
 import { MarketPage } from './layouts/MarketPage';
 import { Navigator } from './components/Navigator';
+import { Loader } from './components/Loader';
 
 export function App() {
   const AppContainer = styled.div`
@@ -33,7 +34,7 @@ export function App() {
             <AppContainer>
               <Navigator />
               <Canvas
-                fallback={null}
+                fallback={<Loader />}
                 camera={{ position: [0, -10, 80], fov: 50 }}
                 dpr={[1, 2]}
               >
