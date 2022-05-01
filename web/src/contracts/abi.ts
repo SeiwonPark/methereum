@@ -1,5 +1,5 @@
-export const abis = {
-  NFT_ABI: [
+export const ABIS = {
+  NFT: [
     {
       anonymous: false,
       inputs: [
@@ -47,25 +47,6 @@ export const abis = {
       inputs: [
         {
           internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-      ],
-      name: 'balanceOf',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
           name: 'to',
           type: 'address',
         },
@@ -78,25 +59,6 @@ export const abis = {
       name: 'mint',
       outputs: [],
       stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'ownerOf',
-      outputs: [
-        {
-          internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-      ],
-      stateMutability: 'view',
       type: 'function',
     },
     {
@@ -122,8 +84,66 @@ export const abis = {
       stateMutability: 'nonpayable',
       type: 'function',
     },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+      ],
+      name: 'balanceOf',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'ownerOf',
+      outputs: [
+        {
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
   ],
-  MARKET_ABI: [
+  MARKET: [
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: 'amount',
+          type: 'uint256',
+        },
+      ],
+      name: 'bid',
+      outputs: [],
+      stateMutability: 'payable',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'end',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
     {
       inputs: [
         {
@@ -184,6 +204,20 @@ export const abis = {
       type: 'event',
     },
     {
+      inputs: [],
+      name: 'start',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'withdraw',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
       anonymous: false,
       inputs: [
         {
@@ -203,13 +237,6 @@ export const abis = {
       type: 'event',
     },
     {
-      inputs: [],
-      name: 'bid',
-      outputs: [],
-      stateMutability: 'payable',
-      type: 'function',
-    },
-    {
       inputs: [
         {
           internalType: 'address',
@@ -226,13 +253,6 @@ export const abis = {
         },
       ],
       stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'end',
-      outputs: [],
-      stateMutability: 'nonpayable',
       type: 'function',
     },
     {
@@ -328,13 +348,6 @@ export const abis = {
     },
     {
       inputs: [],
-      name: 'start',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [],
       name: 'started',
       outputs: [
         {
@@ -344,13 +357,6 @@ export const abis = {
         },
       ],
       stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'withdraw',
-      outputs: [],
-      stateMutability: 'nonpayable',
       type: 'function',
     },
   ],

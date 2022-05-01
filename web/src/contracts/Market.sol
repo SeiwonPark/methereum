@@ -90,21 +90,22 @@ contract Market {
     }
 
     /// @notice Bids on the current NFT asset
-    /// @dev Updates highest bidding info with `msg.value`
+    /// @dev Updates highest bidding info with `amount`
+    /// @param amount amount to bid
     /// Throws if `block.timestamp` already passed `endAt`
     /// and bidding amount is lower than `highestBid`
-    function bid() external payable onStart(started) {
+    function bid(uint256 amount) external payable onStart(started) {
         require(block.timestamp < endAt, "ended");
-        require(msg.value > highestBid, "value < highest");
+        require(amount > highestBid, "value < highest");
 
         if (highestBidder != address(0)) {
             bids[highestBidder] += highestBid;
         }
 
         highestBidder = msg.sender;
-        highestBid = msg.value;
+        highestBid = amount;
 
-        emit Bid(msg.sender, msg.value);
+        emit Bid(msg.sender, amount);
     }
 
     /// @notice Takes back message sender's bidded amount

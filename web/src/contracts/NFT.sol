@@ -1,6 +1,6 @@
 /**
  * This is a part of team project of 2022 KMU CS course, 'Practice in Network' by Prof. Sanghwan Lee.
- * This contract is for configuring NFT auction market and handling its trading process.
+ * This contract is for configuring NFT authorizing and authenticating by the contract owner.
  * Code referred to https://solidity-by-example.org/
  * Authored by Sooyeon Oh, Taewon Jung and Seiwon Park
  */
