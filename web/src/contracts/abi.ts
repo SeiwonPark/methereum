@@ -1,4 +1,8 @@
 export const ABIS = {
+  /** For contract owner */
+  NFT_TX_ADDRESS: '0x91497CD8DdD479E8A91dB4F60f54308BA120429f',
+  /** For contract user */
+  MARKET_TX_ADDRESS: '0x38142147969087ba96f505a404fac2e1d13d4ec9',
   NFT: [
     {
       anonymous: false,

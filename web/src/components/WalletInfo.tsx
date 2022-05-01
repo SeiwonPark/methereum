@@ -23,8 +23,8 @@ export function WalletInfo() {
   } = useWeb3React<Web3Provider>();
   const [ethBalance, setEthBalance] = useState<string>('0.0');
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const nftContract = new ethers.Contract('0x91497CD8DdD479E8A91dB4F60f54308BA120429f', ABIS.NFT, provider.getSigner());
-  const marketContract = new ethers.Contract('0x38142147969087ba96f505a404fac2e1d13d4ec9', ABIS.MARKET, provider.getSigner());
+  const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
+  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS, ABIS.MARKET, provider.getSigner());
 
   const fetcher = (_library: any) => (...args: any) => {
     const [method, ...params] = args;
@@ -42,18 +42,6 @@ export function WalletInfo() {
       setTitle('Copy to clipboard');
     }, 1000);
   };
-
-  // // FIXME: this is for the owner of NFT(admin)
-  // const mint = async () => {
-  //   try {
-  //     await nftContract.mint(account, 1);
-  //   } catch (err: any) {
-  //     setErrorMessage(err.message);
-  //     setTimeout(() => {
-  //       setErrorMessage('');
-  //     }, 3000);
-  //   }
-  // };
 
   const bid = async () => {
     try {
