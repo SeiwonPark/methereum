@@ -26,6 +26,7 @@ chrome-user-data
 package-lock.json
 *.gz
 .nyc_output
+dist
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
