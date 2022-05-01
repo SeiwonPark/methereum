@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { nft } from 'controllers/nft.controller';
-import { market } from 'controllers/market.controller';
+import { market } from '../controllers/market.controller';
+import { nft } from '../controllers/nft.controller';
 
 export const router = Router();
 
