@@ -1,24 +1,26 @@
 module.exports = {
   env: {
-    browser: true,
     es2021: true,
+    node: true,
   },
   extends: [
     'airbnb-base',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
   },
   plugins: [
     '@typescript-eslint',
   ],
   rules: {
     'no-unused-vars': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 0,
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never', ts: 'never', json: 'never',
-    }],
+    'react/require-default-props': 0,
+    'react/no-unused-prop-types': 0,
+    'react/jsx-filename-extension': [0],
+    'import/extensions': 'off',
     'import/no-unresolved': 0,
     quotes: ['error', 'single'],
     'valid-jsdoc': 0,
