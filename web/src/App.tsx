@@ -6,6 +6,7 @@ import { LandingPage } from './layouts/LandingPage';
 import { MarketPage } from './layouts/MarketPage';
 import { Navigator } from './components/Navigator';
 import { Loader } from './components/Loader';
+import { AdminPage } from './layouts/AdminPage';
 
 export function App() {
   const AppContainer = styled.div`
@@ -40,6 +41,15 @@ export function App() {
               >
                 <MarketPage />
               </Canvas>
+            </AppContainer>
+          )}
+        />
+        <Route
+          path="/admin"
+          element={(
+            <AppContainer>
+              <Navigator />
+              <AdminPage />
             </AppContainer>
           )}
         />

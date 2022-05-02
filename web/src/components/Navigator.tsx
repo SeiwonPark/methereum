@@ -46,6 +46,21 @@ export function Navigator() {
         >
           Market
         </a>
+        <a
+          href="/admin"
+          style={{
+            padding: '0.5rem',
+            margin: '1rem',
+            textDecoration: 'none',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: 'rgba(250, 250, 250, 0.7)',
+            userSelect: 'none',
+
+          }}
+        >
+          Admin
+        </a>
       </nav>
     </div>
   );
