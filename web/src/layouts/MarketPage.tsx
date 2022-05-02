@@ -8,8 +8,8 @@ export function MarketPage() {
   return (
     <>
       <Title text="Market" color="#1976D2" />
-      <spotLight position={[-100, -100, -100]} intensity={0.6} angle={0.3} penumbra={1} />
-      <hemisphereLight color="white" groundColor="#FFA500" position={[50, 10, 50]} intensity={1} />
+      {/* <spotLight position={[-100, -100, -100]} intensity={0.6} angle={0.3} penumbra={1} /> */}
+      <hemisphereLight color="#1976D2" groundColor="#FFA500" position={[50, 10, 50]} intensity={1} />
       <Suspense fallback={null}>
         <Bounds fit clip margin={1.2}>
           <ModelController>

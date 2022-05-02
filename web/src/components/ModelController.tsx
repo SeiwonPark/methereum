@@ -12,12 +12,18 @@ export function ModelController({ children }: ModelControllerProps) {
   const api = useBounds();
   const { clicked, model, changeClickState } = useStore();
 
-  const handleOpen = (e: ThreeEvent<MouseEvent>) => {
+  const foo = async () => {
+    const response = await fetch('/');
+    const data = await response;
+  };
+
+  const handleOpen = async (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     if (e.delta <= 1) {
       api.refresh(e.object).fit();
       changeClickState();
     }
+    await foo();
     // TODO: model info
     // console.log(model[Object(e.object).material.uuid]);
   };
