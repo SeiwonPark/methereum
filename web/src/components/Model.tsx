@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 import { GLTF as GLTFThree } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Euler } from '@react-three/fiber';
+import { useStore } from '../hooks/useStore';
 
 declare module 'three-stdlib' {
   export interface GLTF extends GLTFThree {
@@ -12,20 +13,36 @@ declare module 'three-stdlib' {
 }
 
 interface ModelProps {
+  tokenId: number;
   name: string;
+  path: string;
   position: [x: number, y: number, z: number];
   rotation: Euler;
   scale?: number;
 }
 
-export function Model({ name, ...props }: ModelProps) {
-  const { nodes } = useGLTF('./compressed.glb');
+export function Model({
+  name, path, tokenId, ...props
+}: ModelProps) {
+  const { nodes, materials } = useGLTF(path);
+  const { changeModelInfo } = useStore();
+  const sortedKeys = Object.keys(materials).sort();
+  const materialName = sortedKeys.length === 1 ? Object.keys(materials)[0] : sortedKeys[tokenId];
+
+  useEffect(() => {
+    const obj = {
+      [materials[materialName].uuid]: {
+        name,
+        tokenId,
+      },
+    };
+    changeModelInfo(obj);
+  }, [nodes]);
 
   return (
     <mesh
       geometry={nodes[name].geometry}
       material={nodes[name].material}
-      material-emissive="red"
       material-roughness={1}
       dispose={null}
       {...props}

@@ -8,20 +8,86 @@ export function MarketPage() {
   return (
     <>
       <Title text="Market" color="#1976D2" />
-      <spotLight position={[-100, -100, -100]} intensity={0.2} angle={0.3} penumbra={1} />
-      <hemisphereLight color="white" groundColor="#ff0f00" position={[-10, 30, 10]} intensity={1} />
+      <spotLight position={[-100, -100, -100]} intensity={0.6} angle={0.3} penumbra={1} />
+      <hemisphereLight color="white" groundColor="#FFA500" position={[50, 10, 50]} intensity={1} />
       <Suspense fallback={null}>
         <Bounds fit clip margin={1.2}>
           <ModelController>
-            <Model name="Curly" position={[1, -11, -20]} rotation={[2, 0, -0]} />
-            <Model name="DNA" position={[30, 0, -17]} rotation={[1, 1, -2]} />
-            <Model name="Headphones" position={[35, 2, 4]} rotation={[1, 0, -1]} />
-            <Model name="Notebook" position={[-30, -20, -17]} rotation={[2, 0, 1]} />
-            <Model name="Rocket003" position={[25, 15, -5]} rotation={[1, 1, 0]} />
-            <Model name="Roundcube001" position={[-38, -5, 7]} rotation={[1, 0, 0]} scale={0.5} />
-            <Model name="Table" position={[1, 13, -26]} rotation={[1, 0, -1]} scale={0.5} />
-            <Model name="VR_Headset" position={[25, -15, 28]} rotation={[1, 0, -1]} scale={5} />
-            <Model name="Zeppelin" position={[-18, 16, 10]} rotation={[3, -1, 3]} scale={0.006} />
+            <Model
+              tokenId={0}
+              name="Curly"
+              path="./compressed.glb"
+              position={[1, -11, -20]}
+              rotation={[2, 0, -0]}
+            />
+            <Model
+              tokenId={1}
+              name="DNA"
+              path="./compressed.glb"
+              position={[30, 0, -17]}
+              rotation={[1, 1, -2]}
+            />
+            <Model
+              tokenId={2}
+              name="Headphones"
+              path="./compressed.glb"
+              position={[40, 2, 4]}
+              rotation={[1, 0, -1]}
+            />
+            <Model
+              tokenId={3}
+              name="VR_Headset"
+              path="./compressed.glb"
+              position={[25, -15, 28]}
+              rotation={[1, 0, -1]}
+              scale={5}
+            />
+            <Model
+              tokenId={5}
+              name="Notebook"
+              path="./compressed.glb"
+              position={[-30, -20, -17]}
+              rotation={[2, 0, 1]}
+            />
+            <Model
+              tokenId={6}
+              name="Rocket003"
+              path="./compressed.glb"
+              position={[35, 15, -5]}
+              rotation={[1, 1, 0]}
+            />
+            <Model
+              tokenId={7}
+              name="Roundcube001"
+              path="./compressed.glb"
+              position={[-38, -5, 7]}
+              rotation={[1, 0, 0]}
+              scale={0.5}
+            />
+            <Model
+              tokenId={8}
+              name="Table"
+              path="./compressed.glb"
+              position={[1, 13, -26]}
+              rotation={[1, 0, -1]}
+              scale={0.5}
+            />
+            <Model
+              tokenId={9}
+              name="Zeppelin"
+              path="./compressed.glb"
+              position={[-18, 16, 10]}
+              rotation={[3, -1, 3]}
+              scale={0.006}
+            />
+            <Model
+              tokenId={10}
+              name="node-0"
+              path="./Astronaut.glb"
+              position={[10, 20, -20]}
+              rotation={[0, 0, 0.2]}
+              scale={10}
+            />
           </ModelController>
         </Bounds>
         {/* FIXME: no fixed width & height */}
