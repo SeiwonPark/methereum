@@ -2,7 +2,7 @@
  * This is a part of team project of 2022 KMU CS course, 'Practice in Network' by Prof. Sanghwan Lee.
  * This contract is for configuring NFT auction market and handling its trading process.
  * Code referred to https://solidity-by-example.org/
- * Authored by Sooyeon Oh, Taewon Jung and Seiwon Park
+ * Authored by Sooyeon Oh, Taewon Chung and Seiwon Park
  */
 
 // SPDX-License-Identifier: MIT
@@ -12,7 +12,7 @@ pragma solidity ^0.8.13;
 /// @notice Uses ERC-721 based token
 /// @dev Well defined at https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
 interface ERC721 {
-    function transfer(
+    function transferFrom(
         address from,
         address to,
         uint256 nftId
@@ -82,55 +82,60 @@ contract Market {
     /// @dev Initializing auction market depending on the state variable, `started`
     /// Throws unless `msg.sender` is the current contract owner
     function start() external onStart(!started) {
-        require(msg.sender == seller, "not seller");
+        require(msg.sender == seller, "Not seller.");
 
-        nft.transfer(msg.sender, address(this), nftId);
+        nft.transferFrom(msg.sender, address(this), nftId);
         started = true;
-        endAt = block.timestamp + 3600 * 1 seconds;
+        ended = false;
+        endAt = block.timestamp + 7 days;
     }
 
     /// @notice Bids on the current NFT asset
-    /// @dev Updates highest bidding info with `amount`
-    /// @param amount amount to bid
+    /// @dev Updates highest bidding info with `msg.value`
     /// Throws if `block.timestamp` already passed `endAt`
     /// and bidding amount is lower than `highestBid`
-    function bid(uint256 amount) external payable onStart(started) {
-        require(block.timestamp < endAt, "ended");
-        require(amount > highestBid, "value < highest");
+    function bid() external payable onStart(started) {
+        require(block.timestamp < endAt, "Auction has been over.");
+        require(
+            msg.value > highestBid,
+            "Transferred value should be higher than the current highest bid."
+        );
 
         if (highestBidder != address(0)) {
             bids[highestBidder] += highestBid;
         }
 
         highestBidder = msg.sender;
-        highestBid = amount;
+        highestBid = msg.value;
 
-        emit Bid(msg.sender, amount);
+        emit Bid(msg.sender, msg.value);
     }
 
     /// @notice Takes back message sender's bidded amount
     /// @dev Resets stored bidded amount and makes transfer to take it back
     function withdraw() external {
-        uint256 biddedAmount = bids[msg.sender];
+        uint256 bal = bids[msg.sender];
         bids[msg.sender] = 0;
-        payable(msg.sender).transfer(biddedAmount);
+        payable(msg.sender).transfer(bal);
 
-        emit Withdraw(msg.sender, biddedAmount);
+        emit Withdraw(msg.sender, bal);
     }
 
-    /// @notice Ends bidding and sets bid winner
+    /// @notice Ends bidding and sets bid winner`
     /// @dev Updates NFT info with the bid winner
     /// Throws unless current time passes the time, `endAt` and checks if it's ended
     function end() external onStart(started) {
-        // require(block.timestamp >= endAt, "not ended"); FIXME:
-        require(!ended, "ended");
+        require(started, "Auction has not started.");
+        // require(block.timestamp >= endAt, "Auction has been over.");
+        require(!ended, "Auction has been over.");
 
         ended = true;
+        started = false;
         if (highestBidder != address(0)) {
-            nft.transfer(address(this), highestBidder, nftId);
+            nft.transferFrom(address(this), highestBidder, nftId);
             seller.transfer(highestBid);
         } else {
-            nft.transfer(address(this), seller, nftId);
+            nft.transferFrom(address(this), seller, nftId);
         }
 
         emit End(highestBidder, highestBid);

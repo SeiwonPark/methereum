@@ -2,7 +2,7 @@
  * This is a part of team project of 2022 KMU CS course, 'Practice in Network' by Prof. Sanghwan Lee.
  * This contract is for configuring NFT authorizing and authenticating by the contract owner.
  * Code referred to https://solidity-by-example.org/
- * Authored by Sooyeon Oh, Taewon Jung and Seiwon Park
+ * Authored by Sooyeon Oh, Taewon Chung and Seiwon Park
  */
 
 // SPDX-License-Identifier: MIT
@@ -31,7 +31,7 @@ contract NFT {
     /// @param owner Given approved address
     /// Throws unless given parameter `owner` is specified.
     function balanceOf(address owner) external view returns (uint256) {
-        require(owner != address(0), "No address specified: zero address");
+        require(owner != address(0), "Owner is not specified: zero address.");
         return _balances[owner];
     }
 
@@ -41,37 +41,27 @@ contract NFT {
     /// Throws unless given parameter `owner` is specified or approved.
     function ownerOf(uint256 nftId) public view returns (address owner) {
         owner = _owners[nftId];
-        require(owner != address(0), "Token doesn't exist");
+        require(owner != address(0), "Token doesn't exist.");
     }
 
-    function _transfer(
-        address owner,
-        address from,
-        address to,
-        uint256 nftId
-    ) private {
-        require(from == owner, "Not owner");
-        require(to != address(0), "Transferred to the zero address");
-
-        _approve(address(0), nftId);
-        _balances[from] -= 1;
-        _balances[to] += 1;
-        _owners[nftId] = to;
+    function setApprovalForAll(address operator, bool approved) external {
+        _operatorApprovals[msg.sender][operator] = approved;
     }
 
-    function transfer(
-        address from,
-        address to,
-        uint256 nftId
-    ) external {
-        address owner = ownerOf(nftId);
-        _transfer(owner, from, to, nftId);
+    function getApproved(uint256 nftId) external view returns (address) {
+        require(_owners[nftId] != address(0), "Token doesn't exist.");
+        return _tokenApprovals[nftId];
     }
 
     /// @notice Confirms NFT token ID
     /// @dev Handles storing approved NFT token ID to `_tokenApprovals`
-    function _approve(address to, uint256 nftId) private {
+    function _approve(
+        address owner,
+        address to,
+        uint256 nftId
+    ) private {
         _tokenApprovals[nftId] = to;
+        emit Approval(owner, to, nftId);
     }
 
     /// @notice Confirms approved owner
@@ -83,9 +73,48 @@ contract NFT {
         address owner = _owners[nftId];
         require(
             msg.sender == owner || _operatorApprovals[owner][msg.sender],
-            "Not approved owner"
+            "Not owner nor approved."
         );
-        _approve(to, nftId);
+        _approve(owner, to, nftId);
+    }
+
+    function _isApprovedOrOwner(
+        address owner,
+        address spender,
+        uint256 nftId
+    ) private view returns (bool) {
+        return (spender == owner ||
+            _tokenApprovals[nftId] == spender ||
+            _operatorApprovals[owner][spender]);
+    }
+
+    function _transfer(
+        address owner,
+        address from,
+        address to,
+        uint256 nftId
+    ) private {
+        require(from == owner, "Not owner.");
+        require(to != address(0), "Transfer to the zero address.");
+
+        _approve(owner, address(0), nftId);
+
+        _balances[from] -= 1;
+        _balances[to] += 1;
+        _owners[nftId] = to;
+    }
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 nftId
+    ) external {
+        address owner = ownerOf(nftId);
+        require(
+            _isApprovedOrOwner(owner, msg.sender, nftId),
+            "Not owner nor approved."
+        );
+        _transfer(owner, from, to, nftId);
     }
 
     /// @notice Minting address with its NFT token ID
@@ -94,8 +123,8 @@ contract NFT {
     /// @param nftId NFT token ID
     /// Throws unless given parameter `owner` is specified or already minted.
     function mint(address to, uint256 nftId) external {
-        require(to != address(0), "Minted to zero address");
-        require(_owners[nftId] == address(0), "Token already minted");
+        require(to != address(0), "Minted to zero address.");
+        require(_owners[nftId] == address(0), "Token already minted.");
 
         _balances[to] += 1;
         _owners[nftId] = to;
