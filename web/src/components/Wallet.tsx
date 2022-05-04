@@ -5,10 +5,14 @@ import { Button, Avatar } from '@mui/material';
 import { useEagerConnect } from '../hooks/useEagerConnect';
 import { connectorList } from '../utils/Connectors';
 import { WalletInfo } from './WalletInfo';
+import { useStore } from '../hooks/useStore';
 
 export function Wallet() {
-  const { active, activate, deactivate } = useWeb3React<Web3Provider>();
+  const {
+    active, account, activate, deactivate,
+  } = useWeb3React<Web3Provider>();
   const eagerConnect = useEagerConnect();
+  const { changeUserAddress } = useStore();
 
   const handleClick = (connectorName: 'MetaMask') => {
     try {
@@ -26,7 +30,9 @@ export function Wallet() {
     }
   };
 
-  useEffect(() => {}, [active]);
+  useEffect(() => {
+    changeUserAddress(account as string);
+  }, [active]);
 
   return (
     <div
