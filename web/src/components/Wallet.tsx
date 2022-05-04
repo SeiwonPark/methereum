@@ -12,7 +12,7 @@ export function Wallet() {
     active, account, activate, deactivate,
   } = useWeb3React<Web3Provider>();
   const eagerConnect = useEagerConnect();
-  const { changeUserAddress } = useStore();
+  const { userAddress, changeUserAddress } = useStore();
 
   const handleClick = (connectorName: 'MetaMask') => {
     try {
@@ -32,7 +32,7 @@ export function Wallet() {
 
   useEffect(() => {
     changeUserAddress(account as string);
-  }, [active]);
+  }, [active, userAddress]);
 
   return (
     <div

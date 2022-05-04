@@ -15,6 +15,7 @@ declare module 'three-stdlib' {
 interface ModelProps {
   tokenId: number;
   name: string;
+  description: string;
   path: string;
   position: [x: number, y: number, z: number];
   rotation: Euler;
@@ -22,10 +23,10 @@ interface ModelProps {
 }
 
 export function Model({
-  name, path, tokenId, ...props
+  name, path, description, tokenId, ...props
 }: ModelProps) {
   const { nodes, materials } = useGLTF(path);
-  const { changeModelInfo } = useStore();
+  const { changeModelInfo, changeModelDescription } = useStore();
   const sortedKeys = Object.keys(materials).sort();
   const materialName = sortedKeys.length === 1 ? Object.keys(materials)[0] : sortedKeys[tokenId];
 
@@ -34,6 +35,7 @@ export function Model({
       [materials[materialName].uuid]: {
         name,
         tokenId,
+        description,
       },
     };
     changeModelInfo(obj);

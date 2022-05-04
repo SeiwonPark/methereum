@@ -10,12 +10,9 @@ interface ModelControllerProps {
 
 export function ModelController({ children }: ModelControllerProps) {
   const api = useBounds();
-  const { clicked, model, changeClickState } = useStore();
-
-  const foo = async () => {
-    const response = await fetch('/');
-    const data = await response;
-  };
+  const {
+    clicked, model, modelId, changeModelId, changeClickState, changeModelDescription,
+  } = useStore();
 
   const handleOpen = async (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
@@ -23,9 +20,8 @@ export function ModelController({ children }: ModelControllerProps) {
       api.refresh(e.object).fit();
       changeClickState();
     }
-    await foo();
-    // TODO: model info
-    // console.log(model[Object(e.object).material.uuid]);
+    changeModelId(model[Object(e.object).material.uuid].tokenId);
+    changeModelDescription(model[Object(e.object).material.uuid].description);
   };
 
   const handleClose = (e?: MouseEvent) => {
@@ -37,7 +33,9 @@ export function ModelController({ children }: ModelControllerProps) {
     }
   };
 
-  useEffect(() => {}, [clicked]);
+  useEffect(() => {
+    // ...
+  }, [clicked, modelId]);
 
   return (
     <>

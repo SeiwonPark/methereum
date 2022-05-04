@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
-import { useStore } from '../hooks/useStore';
+import React from 'react';
 
 // FIXME: dirty & duplicated codes
 export function Navigator() {
-  const { userAddress } = useStore();
-
-  useEffect(() => {
-    // ... refresh page
-  }, [userAddress]);
-
   return (
     <div
       style={{
@@ -53,24 +46,21 @@ export function Navigator() {
         >
           Market
         </a>
-        {userAddress === process.env.REACT_APP_ADMIN_ADDRESS
-        && (
-          <a
-            href="/admin"
-            style={{
-              padding: '0.5rem',
-              margin: '1rem',
-              textDecoration: 'none',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: 'rgba(250, 250, 250, 0.7)',
-              userSelect: 'none',
+        <a
+          href="/admin"
+          style={{
+            padding: '0.5rem',
+            margin: '1rem',
+            textDecoration: 'none',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: 'rgba(250, 250, 250, 0.7)',
+            userSelect: 'none',
 
-            }}
-          >
-            Admin
-          </a>
-        )}
+          }}
+        >
+          Admin
+        </a>
       </nav>
     </div>
   );

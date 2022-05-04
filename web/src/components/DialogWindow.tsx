@@ -15,7 +15,7 @@ export interface DialogWindowProps {
 
 export function DialogWindow({ handleClose }: DialogWindowProps) {
   const descriptionElementRef = useRef<HTMLElement>(null);
-  const { clicked } = useStore();
+  const { clicked, modelId, modelDescription } = useStore();
 
   const fitWindowSize = (): number => {
     const { innerWidth } = window;
@@ -71,9 +71,12 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             paddingBottom: '1rem',
             width: fitWindowSize(),
             wordWrap: 'break-word',
+            fontWeight: 'bold',
+            fontSize: '2rem',
           }}
         >
-          {'Title '.repeat(20)}
+          #
+          {modelId}
         </DialogTitle>
         <DialogContent>
           <DialogContentText
@@ -85,7 +88,7 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               wordWrap: 'break-word',
             }}
           >
-            {'Content '.repeat(100)}
+            {modelDescription}
           </DialogContentText>
         </DialogContent>
         <DialogActions

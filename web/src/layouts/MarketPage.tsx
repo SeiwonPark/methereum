@@ -16,6 +16,7 @@ export function MarketPage() {
             <Model
               tokenId={0}
               name="Curly"
+              description=""
               path="./compressed.glb"
               position={[1, -11, -20]}
               rotation={[2, 0, -0]}
@@ -23,6 +24,7 @@ export function MarketPage() {
             <Model
               tokenId={1}
               name="DNA"
+              description="ab"
               path="./compressed.glb"
               position={[30, 0, -17]}
               rotation={[1, 1, -2]}
@@ -30,6 +32,7 @@ export function MarketPage() {
             <Model
               tokenId={2}
               name="Headphones"
+              description="ac"
               path="./compressed.glb"
               position={[40, 2, 4]}
               rotation={[1, 0, -1]}
@@ -37,6 +40,7 @@ export function MarketPage() {
             <Model
               tokenId={3}
               name="VR_Headset"
+              description="da"
               path="./compressed.glb"
               position={[25, -15, 28]}
               rotation={[1, 0, -1]}
@@ -45,6 +49,7 @@ export function MarketPage() {
             <Model
               tokenId={5}
               name="Notebook"
+              description="ad"
               path="./compressed.glb"
               position={[-30, -20, -17]}
               rotation={[2, 0, 1]}
@@ -52,6 +57,7 @@ export function MarketPage() {
             <Model
               tokenId={6}
               name="Rocket003"
+              description="e"
               path="./compressed.glb"
               position={[35, 15, -5]}
               rotation={[1, 1, 0]}
@@ -59,6 +65,7 @@ export function MarketPage() {
             <Model
               tokenId={7}
               name="Roundcube001"
+              description="f"
               path="./compressed.glb"
               position={[-38, -5, 7]}
               rotation={[1, 0, 0]}
@@ -67,6 +74,7 @@ export function MarketPage() {
             <Model
               tokenId={8}
               name="Table"
+              description="g"
               path="./compressed.glb"
               position={[1, 13, -26]}
               rotation={[1, 0, -1]}
@@ -75,6 +83,7 @@ export function MarketPage() {
             <Model
               tokenId={9}
               name="Zeppelin"
+              description="ee"
               path="./compressed.glb"
               position={[-18, 16, 10]}
               rotation={[3, -1, 3]}
@@ -83,6 +92,7 @@ export function MarketPage() {
             <Model
               tokenId={10}
               name="node-0"
+              description="asa"
               path="./Astronaut.glb"
               position={[10, 20, -20]}
               rotation={[0, 0, 0.2]}
