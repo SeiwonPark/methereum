@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useRef, useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { ethers } from 'ethers';
@@ -47,7 +46,7 @@ export function WalletInfo() {
     try {
       await marketContract.bid(amount);
     } catch (err: any) {
-      setErrorMessage(err.message);
+      setErrorMessage(JSON.parse(JSON.stringify(err)).error.message);
       setTimeout(() => {
         setErrorMessage('');
       }, 3000);

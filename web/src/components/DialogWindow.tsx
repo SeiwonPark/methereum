@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Html } from '@react-three/drei';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,
@@ -6,14 +6,20 @@ import {
 import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { ethers } from 'ethers';
 import { Wallet } from './Wallet';
 import { useStore } from '../hooks/useStore';
+import { ABIS } from '../contracts/abi';
 
 export interface DialogWindowProps {
   handleClose: (e?: MouseEvent | undefined) => void
 }
 
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider);
+
 export function DialogWindow({ handleClose }: DialogWindowProps) {
+  const [owner, setOwner] = useState('');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -22,8 +28,8 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
     return innerWidth < 430 ? innerWidth * 0.6 : innerWidth * 0.3;
   };
 
-  const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc): Web3Provider => {
-    const library = new Web3Provider(provider);
+  const getLibrary = (_provider: ExternalProvider | JsonRpcFetchFunc): Web3Provider => {
+    const library = new Web3Provider(_provider);
     library.pollingInterval = 8000;
     return library;
   };
@@ -33,7 +39,18 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
     if (descriptionElement !== null) {
       descriptionElement.focus();
     }
-  }, []);
+
+    const getOwner = async () => {
+      if (modelId !== -1) {
+        await nftContract.ownerOf(modelId)
+          .then((result: any) => {
+            setOwner(result);
+          });
+      }
+    };
+
+    getOwner();
+  }, [modelId]);
 
   return (
     <Html>
@@ -102,7 +119,7 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             }}
           >
             {'Owner: '}
-            {}
+            {owner}
           </DialogContentText>
         </DialogContent>
         <DialogActions
@@ -111,7 +128,7 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             justifyContent: 'flex-start',
           }}
         >
-          <Web3ReactProvider getLibrary={(provider) => getLibrary(provider)}>
+          <Web3ReactProvider getLibrary={(_provider) => getLibrary(_provider)}>
             <Wallet />
           </Web3ReactProvider>
         </DialogActions>
