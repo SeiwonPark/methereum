@@ -24,9 +24,8 @@ export function ModelController({ children }: ModelControllerProps) {
       api.refresh(e.object).fit();
       changeClickState();
     }
-    changeModelId(model[Object(e.object).material.uuid].tokenId);
-    changeModelDescription(model[Object(e.object).material.uuid].description);
-    console.log(await nftContract.ownerOf(model[Object(e.object).material.uuid].tokenId));
+    changeModelId(model[Object(e.object.parent).parent.uuid].tokenId);
+    changeModelDescription(model[Object(e.object.parent).parent.uuid].description);
   };
 
   const handleClose = (e?: MouseEvent) => {

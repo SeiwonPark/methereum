@@ -86,9 +86,23 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             sx={{
               width: fitWindowSize(),
               wordWrap: 'break-word',
+              margin: '0.5rem',
             }}
           >
             {modelDescription}
+          </DialogContentText>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+            sx={{
+              width: fitWindowSize(),
+              wordWrap: 'break-word',
+              margin: '0.5rem',
+            }}
+          >
+            {'Owner: '}
+            {}
           </DialogContentText>
         </DialogContent>
         <DialogActions

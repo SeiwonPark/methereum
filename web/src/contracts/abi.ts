@@ -1,6 +1,6 @@
 export const ABIS = {
   /** For contract owner */
-  NFT_TX_ADDRESS: '0x91497CD8DdD479E8A91dB4F60f54308BA120429f',
+  NFT_TX_ADDRESS: '0xb32da9fcc9240c1e761b290323cfbc4dc739ed1f',
   /** For contract user */
   MARKET_TX_ADDRESS: '0x38142147969087ba96f505a404fac2e1d13d4ec9',
   NFT: [
@@ -51,47 +51,6 @@ export const ABIS = {
       inputs: [
         {
           internalType: 'address',
-          name: 'to',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'mint',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'from',
-          type: 'address',
-        },
-        {
-          internalType: 'address',
-          name: 'to',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'transfer',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
           name: 'owner',
           type: 'address',
         },
@@ -115,6 +74,43 @@ export const ABIS = {
           type: 'uint256',
         },
       ],
+      name: 'getApproved',
+      outputs: [
+        {
+          internalType: 'address',
+          name: '',
+          type: 'address',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'mint',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
       name: 'ownerOf',
       outputs: [
         {
@@ -124,6 +120,47 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'operator',
+          type: 'address',
+        },
+        {
+          internalType: 'bool',
+          name: 'approved',
+          type: 'bool',
+        },
+      ],
+      name: 'setApprovalForAll',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'from',
+          type: 'address',
+        },
+        {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'transferFrom',
+      outputs: [],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
   ],

@@ -18,74 +18,32 @@ interface ModelProps {
   description: string;
   path: string;
   position: [x: number, y: number, z: number];
-  rotation: Euler;
   scale?: number;
 }
 
 export function Model({
   name, path, description, tokenId, ...props
 }: ModelProps) {
-  const { nodes, materials } = useGLTF(path);
-  console.log(nodes, materials);
+  const model = useGLTF(path);
   const { changeModelInfo } = useStore();
-  const sortedKeys = Object.keys(materials).sort();
-  const materialName = sortedKeys.length === 1 ? Object.keys(materials)[0] : sortedKeys[tokenId];
 
   useEffect(() => {
-    // const obj = {
-    //   [materials[materialName].uuid]: {
-    //     name,
-    //     tokenId,
-    //     description,
-    //   },
-    // };
-    // changeModelInfo(obj);
-  }, [nodes]);
+    const obj = {
+      [model.scene.uuid]: {
+        name,
+        tokenId,
+        description,
+      },
+    };
+    changeModelInfo(obj);
+  }, []);
 
   return (
-    <group>
-      <mesh
-        geometry={nodes.Body_1.geometry}
-        material={nodes.Body_1.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
-      <mesh
-        geometry={nodes.Body_2.geometry}
-        material={nodes.Body_2.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
-      <mesh
-        geometry={nodes.Body_3.geometry}
-        material={nodes.Body_3.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
-      <mesh
-        geometry={nodes.Body_4.geometry}
-        material={nodes.Body_4.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
-      <mesh
-        geometry={nodes.Body_5.geometry}
-        material={nodes.Body_5.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
-      <mesh
-        geometry={nodes.Body_6.geometry}
-        material={nodes.Body_6.material}
-        material-roughness={1}
-        dispose={null}
-        {...props}
-      />
+    <group
+      position={props.position}
+      rotation={[0, Math.PI, 0]}
+    >
+      <primitive object={model.scene} />
     </group>
   );
 }

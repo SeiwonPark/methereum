@@ -69,7 +69,6 @@ export function WalletInfo() {
     }
 
     library?.on('block', () => {
-      console.log('updated');
       mutate(undefined, true);
     });
     return () => {
