@@ -1,8 +1,10 @@
 import React, { useEffect, ReactNode } from 'react';
 import { useBounds } from '@react-three/drei';
 import { ThreeEvent } from '@react-three/fiber';
+import { ethers } from 'ethers';
 import { useStore } from '../hooks/useStore';
 import { DialogWindow } from './DialogWindow';
+import { ABIS } from '../contracts/abi';
 
 interface ModelControllerProps {
   children: ReactNode;
@@ -13,6 +15,8 @@ export function ModelController({ children }: ModelControllerProps) {
   const {
     clicked, model, modelId, changeModelId, changeClickState, changeModelDescription,
   } = useStore();
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
 
   const handleOpen = async (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
@@ -22,6 +26,7 @@ export function ModelController({ children }: ModelControllerProps) {
     }
     changeModelId(model[Object(e.object).material.uuid].tokenId);
     changeModelDescription(model[Object(e.object).material.uuid].description);
+    console.log(await nftContract.ownerOf(model[Object(e.object).material.uuid].tokenId));
   };
 
   const handleClose = (e?: MouseEvent) => {

@@ -26,29 +26,67 @@ export function Model({
   name, path, description, tokenId, ...props
 }: ModelProps) {
   const { nodes, materials } = useGLTF(path);
-  const { changeModelInfo, changeModelDescription } = useStore();
+  console.log(nodes, materials);
+  const { changeModelInfo } = useStore();
   const sortedKeys = Object.keys(materials).sort();
   const materialName = sortedKeys.length === 1 ? Object.keys(materials)[0] : sortedKeys[tokenId];
 
   useEffect(() => {
-    const obj = {
-      [materials[materialName].uuid]: {
-        name,
-        tokenId,
-        description,
-      },
-    };
-    changeModelInfo(obj);
+    // const obj = {
+    //   [materials[materialName].uuid]: {
+    //     name,
+    //     tokenId,
+    //     description,
+    //   },
+    // };
+    // changeModelInfo(obj);
   }, [nodes]);
 
   return (
-    <mesh
-      geometry={nodes[name].geometry}
-      material={nodes[name].material}
-      material-roughness={1}
-      dispose={null}
-      {...props}
-    />
+    <group>
+      <mesh
+        geometry={nodes.Body_1.geometry}
+        material={nodes.Body_1.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+      <mesh
+        geometry={nodes.Body_2.geometry}
+        material={nodes.Body_2.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+      <mesh
+        geometry={nodes.Body_3.geometry}
+        material={nodes.Body_3.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+      <mesh
+        geometry={nodes.Body_4.geometry}
+        material={nodes.Body_4.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+      <mesh
+        geometry={nodes.Body_5.geometry}
+        material={nodes.Body_5.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+      <mesh
+        geometry={nodes.Body_6.geometry}
+        material={nodes.Body_6.material}
+        material-roughness={1}
+        dispose={null}
+        {...props}
+      />
+    </group>
   );
 }
 
