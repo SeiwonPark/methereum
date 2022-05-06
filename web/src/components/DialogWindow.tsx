@@ -56,7 +56,7 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
         await nftContract.ownerOf(modelId)
           .then(async (result: any) => {
             setOwner(result);
-            await getHighestBid();
+            if (result !== undefined && result !== null && result !== '') { await getHighestBid(); }
           });
       }
     };
