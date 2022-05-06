@@ -12,15 +12,6 @@ pragma solidity ^0.8.13;
 /// @notice Use this contract for NFT configuration
 /// @dev Defined NFT configuration based on ERC-721 standard
 contract NFT {
-    /// @dev This emits when message sender is approved of NFT ID
-    /// Indexed approved owner(message sender) will be logged along with NFT ID
-    /// so that it makes it easier to filter each owner on etherscan.
-    event Approval(
-        address indexed owner,
-        address indexed approved,
-        uint256 indexed nftId
-    );
-
     mapping(uint256 => address) private _owners;
     mapping(address => uint256) private _balances;
     mapping(uint256 => address) private _tokenApprovals;
@@ -55,13 +46,8 @@ contract NFT {
 
     /// @notice Confirms NFT token ID
     /// @dev Handles storing approved NFT token ID to `_tokenApprovals`
-    function _approve(
-        address owner,
-        address to,
-        uint256 nftId
-    ) private {
+    function _approveContract(address to, uint256 nftId) private {
         _tokenApprovals[nftId] = to;
-        emit Approval(owner, to, nftId);
     }
 
     /// @notice Confirms approved owner
@@ -69,13 +55,17 @@ contract NFT {
     /// @param to Address to approve
     /// @param nftId NFT token ID
     /// Throws unless `msg.sender` is approved.
-    function approve(address to, uint256 nftId) external {
+    function approveContract(address to, uint256 nftId)
+        external
+        returns (bool)
+    {
         address owner = _owners[nftId];
         require(
             msg.sender == owner || _operatorApprovals[owner][msg.sender],
             "Not owner nor approved."
         );
-        _approve(owner, to, nftId);
+        _approveContract(to, nftId);
+        return true;
     }
 
     function _isApprovedOrOwner(
@@ -83,28 +73,27 @@ contract NFT {
         address spender,
         uint256 nftId
     ) private view returns (bool) {
-        return (spender == owner ||
+        return (owner == spender ||
             _tokenApprovals[nftId] == spender ||
             _operatorApprovals[owner][spender]);
     }
 
-    function _transfer(
+    function _customTransfer(
         address owner,
         address from,
         address to,
         uint256 nftId
     ) private {
         require(from == owner, "Not owner.");
-        require(to != address(0), "Transfer to the zero address.");
+        require(to != address(0), "Tried transfer to the zero address.");
 
-        _approve(owner, address(0), nftId);
-
+        _approveContract(address(0), nftId);
         _balances[from] -= 1;
         _balances[to] += 1;
         _owners[nftId] = to;
     }
 
-    function transferFrom(
+    function customTransferFrom(
         address from,
         address to,
         uint256 nftId
@@ -114,7 +103,7 @@ contract NFT {
             _isApprovedOrOwner(owner, msg.sender, nftId),
             "Not owner nor approved."
         );
-        _transfer(owner, from, to, nftId);
+        _customTransfer(owner, from, to, nftId);
     }
 
     /// @notice Minting address with its NFT token ID

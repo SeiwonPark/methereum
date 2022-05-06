@@ -12,7 +12,7 @@ pragma solidity ^0.8.13;
 /// @notice Uses ERC-721 based token
 /// @dev Well defined at https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
 interface ERC721 {
-    function transferFrom(
+    function customTransferFrom(
         address from,
         address to,
         uint256 nftId
@@ -82,9 +82,9 @@ contract Market {
     /// @dev Initializing auction market depending on the state variable, `started`
     /// Throws unless `msg.sender` is the current contract owner
     function start() external onStart(!started) {
-        require(msg.sender == seller, "Not seller.");
+        require(payable(msg.sender) == seller, "Not seller.");
 
-        nft.transferFrom(msg.sender, address(this), nftId);
+        nft.customTransferFrom(msg.sender, address(this), nftId);
         started = true;
         ended = false;
         endAt = block.timestamp + 7 days;
@@ -121,7 +121,7 @@ contract Market {
         emit Withdraw(msg.sender, bal);
     }
 
-    /// @notice Ends bidding and sets bid winner`
+    /// @notice Ends bidding and sets bid winner
     /// @dev Updates NFT info with the bid winner
     /// Throws unless current time passes the time, `endAt` and checks if it's ended
     function end() external onStart(started) {
@@ -132,10 +132,10 @@ contract Market {
         ended = true;
         started = false;
         if (highestBidder != address(0)) {
-            nft.transferFrom(address(this), highestBidder, nftId);
+            nft.customTransferFrom(address(this), highestBidder, nftId);
             seller.transfer(highestBid);
         } else {
-            nft.transferFrom(address(this), seller, nftId);
+            nft.customTransferFrom(address(this), seller, nftId);
         }
 
         emit End(highestBidder, highestBid);
