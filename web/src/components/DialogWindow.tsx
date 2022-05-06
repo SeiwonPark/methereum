@@ -21,7 +21,7 @@ const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, AB
 
 export function DialogWindow({ handleClose }: DialogWindowProps) {
   const [owner, setOwner] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
+  const [price, setPrice] = useState<string>('0');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -42,36 +42,27 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
       descriptionElement.focus();
     }
 
+    const getHighestBid = async () => {
+      if (modelId !== -1) {
+        await marketContract.highestBid()
+          .then(async (result: any) => {
+            setPrice(ethers.utils.formatEther(result));
+          });
+      }
+    };
+
     const getOwner = async () => {
       if (modelId !== -1) {
         await nftContract.ownerOf(modelId)
-          .then((result: any) => {
+          .then(async (result: any) => {
             setOwner(result);
+            await getHighestBid();
           });
       }
     };
 
     /** no more than an await */
     getOwner();
-  }, [modelId]);
-
-  useEffect(() => {
-    const { current: descriptionElement } = descriptionElementRef;
-    if (descriptionElement !== null) {
-      descriptionElement.focus();
-    }
-
-    const getHighestBid = async () => {
-      if (modelId !== -1) {
-        await marketContract.highestBid()
-          .then((result: any) => {
-            setPrice(ethers.utils.formatEther(result));
-          });
-      }
-    };
-
-    /** no more than an await */
-    getHighestBid();
   }, [modelId]);
 
   return (
@@ -155,9 +146,14 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             }}
           >
             {'Price: '}
+            {Number(price) * 1000000000000000000}
+            {' '}
+            Wei
+            {' '}
+            (
             {price}
             {' '}
-            ETH
+            ETH)
           </DialogContentText>
         </DialogContent>
         <DialogActions
