@@ -16,14 +16,13 @@ export function WalletInfo() {
   const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const ref = useRef<TooltipProps>();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number>(0);
   const {
     active, account, chainId, library,
   } = useWeb3React<Web3Provider>();
   const [ethBalance, setEthBalance] = useState<string>('0.0');
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
-  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS, ABIS.MARKET, provider.getSigner());
+  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS_1, ABIS.MARKET, provider.getSigner());
 
   const fetcher = (_library: any) => (...args: any) => {
     const [method, ...params] = args;
@@ -44,7 +43,7 @@ export function WalletInfo() {
 
   const bid = async () => {
     try {
-      await marketContract.bid(amount);
+      await marketContract.bid({ value: amount });
     } catch (err: any) {
       setErrorMessage(JSON.parse(JSON.stringify(err)).error.message);
       setTimeout(() => {

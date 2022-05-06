@@ -18,6 +18,7 @@ interface ModelProps {
   description: string;
   path: string;
   position: [x: number, y: number, z: number];
+  rotation: Euler;
   scale?: number;
 }
 
@@ -39,10 +40,7 @@ export function Model({
   }, []);
 
   return (
-    <group
-      position={props.position}
-      rotation={[0, Math.PI, 0]}
-    >
+    <group {...props}>
       <primitive object={model.scene} />
     </group>
   );

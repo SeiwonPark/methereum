@@ -16,10 +16,11 @@ export interface DialogWindowProps {
 }
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
-const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider);
+const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
+const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS_1, ABIS.MARKET, provider.getSigner());
 
 export function DialogWindow({ handleClose }: DialogWindowProps) {
-  const [owner, setOwner] = useState('');
+  const [owner, setOwner] = useState<string>('');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -49,7 +50,17 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
       }
     };
 
+    const getHighestBid = async () => {
+      if (modelId !== -1) {
+        await marketContract.highestBid()
+          .then((result: any) => {
+            console.log(ethers.utils.formatEther(result));
+          });
+      }
+    };
+
     getOwner();
+    getHighestBid();
   }, [modelId]);
 
   return (
@@ -119,7 +130,8 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             }}
           >
             {'Owner: '}
-            {owner}
+            {owner.substring(0, 16)}
+            ...
           </DialogContentText>
         </DialogContent>
         <DialogActions

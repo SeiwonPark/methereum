@@ -1,34 +1,14 @@
 export const ABIS = {
   /** For contract owner */
-  NFT_TX_ADDRESS: '0xb32da9fcc9240c1e761b290323cfbc4dc739ed1f',
-  /** For contract user */
-  MARKET_TX_ADDRESS: '0x38142147969087ba96f505a404fac2e1d13d4ec9',
+  NFT_TX_ADDRESS: '0xdaae273b5f59f2f8cf477f6ba18b2c0eec7c62e6',
+  /**
+   * For contract user
+   *
+   * Each postfix(Number) represents model's token ID
+   */
+  MARKET_TX_ADDRESS_1: '0x3b136c9e9a4b348a3f85b995ffa6168b8ac7cb03',
+  MARKET_TX_ADDRESS_2: '0xdf4246f06d014c2b8b27b690b1fad7f2cc63af57',
   NFT: [
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-        {
-          indexed: true,
-          internalType: 'address',
-          name: 'approved',
-          type: 'address',
-        },
-        {
-          indexed: true,
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'Approval',
-      type: 'event',
-    },
     {
       inputs: [
         {
@@ -42,8 +22,14 @@ export const ABIS = {
           type: 'uint256',
         },
       ],
-      name: 'approve',
-      outputs: [],
+      name: 'approveContract',
+      outputs: [
+        {
+          internalType: 'bool',
+          name: '',
+          type: 'bool',
+        },
+      ],
       stateMutability: 'nonpayable',
       type: 'function',
     },
@@ -64,6 +50,29 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'from',
+          type: 'address',
+        },
+        {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'customTransferFrom',
+      outputs: [],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
     {
@@ -140,51 +149,8 @@ export const ABIS = {
       stateMutability: 'nonpayable',
       type: 'function',
     },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'from',
-          type: 'address',
-        },
-        {
-          internalType: 'address',
-          name: 'to',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'transferFrom',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
   ],
   MARKET: [
-    {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: 'amount',
-          type: 'uint256',
-        },
-      ],
-      name: 'bid',
-      outputs: [],
-      stateMutability: 'payable',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'end',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
     {
       inputs: [
         {
@@ -245,20 +211,6 @@ export const ABIS = {
       type: 'event',
     },
     {
-      inputs: [],
-      name: 'start',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'withdraw',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
       anonymous: false,
       inputs: [
         {
@@ -278,6 +230,13 @@ export const ABIS = {
       type: 'event',
     },
     {
+      inputs: [],
+      name: 'bid',
+      outputs: [],
+      stateMutability: 'payable',
+      type: 'function',
+    },
+    {
       inputs: [
         {
           internalType: 'address',
@@ -294,6 +253,13 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'end',
+      outputs: [],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
     {
@@ -389,6 +355,13 @@ export const ABIS = {
     },
     {
       inputs: [],
+      name: 'start',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [],
       name: 'started',
       outputs: [
         {
@@ -398,6 +371,13 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'withdraw',
+      outputs: [],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
   ],

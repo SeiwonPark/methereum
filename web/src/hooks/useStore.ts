@@ -28,7 +28,7 @@ export const useStore = create<LocalState>((set) => ({
   modelId: -1,
   modelDescription: '',
   changeClickState: () => {
-    set((state) => ({
+    set((state: LocalState) => ({
       clicked: !state.clicked,
     }));
   },
@@ -38,7 +38,7 @@ export const useStore = create<LocalState>((set) => ({
     }));
   },
   changeModelInfo: (obj: ModelInfo) => {
-    set((state) => ({
+    set((state: LocalState) => ({
       model: { ...(state.model), ...obj },
     }));
   },

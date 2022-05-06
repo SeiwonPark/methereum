@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { ethers } from 'ethers';
 import { LandingPage } from './layouts/LandingPage';
 import { MarketPage } from './layouts/MarketPage';
 import { Navigator } from './components/Navigator';
 import { Loader } from './components/Loader';
 import { AdminPage } from './layouts/AdminPage';
-import { ABIS } from './contracts/abi';
 
 export function App() {
   const AppContainer = styled.div`
@@ -18,12 +16,6 @@ export function App() {
   padding: 0;
   overflow: hidden;
 `;
-
-  useEffect(() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
-    const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS, ABIS.MARKET, provider.getSigner());
-  });
 
   return (
     <Router>

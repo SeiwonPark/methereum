@@ -19,6 +19,7 @@ export function MarketPage() {
               description="asa"
               path="./milkcow.glb"
               position={[-10, 10, 20]}
+              rotation={[0, Math.PI, 0]}
               scale={2}
             />
             <Model
@@ -27,6 +28,7 @@ export function MarketPage() {
               description="asa2"
               path="./milkcow2.glb"
               position={[10, -10, -20]}
+              rotation={[0, Math.PI, 0]}
               scale={2}
             />
           </ModelController>
