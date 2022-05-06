@@ -17,10 +17,11 @@ export interface DialogWindowProps {
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
-const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS_1, ABIS.MARKET, provider.getSigner());
+const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
 
 export function DialogWindow({ handleClose }: DialogWindowProps) {
   const [owner, setOwner] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -50,16 +51,26 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
       }
     };
 
+    /** no more than an await */
+    getOwner();
+  }, [modelId]);
+
+  useEffect(() => {
+    const { current: descriptionElement } = descriptionElementRef;
+    if (descriptionElement !== null) {
+      descriptionElement.focus();
+    }
+
     const getHighestBid = async () => {
       if (modelId !== -1) {
         await marketContract.highestBid()
           .then((result: any) => {
-            console.log(ethers.utils.formatEther(result));
+            setPrice(ethers.utils.formatEther(result));
           });
       }
     };
 
-    getOwner();
+    /** no more than an await */
     getHighestBid();
   }, [modelId]);
 
@@ -132,6 +143,21 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             {'Owner: '}
             {owner.substring(0, 16)}
             ...
+          </DialogContentText>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+            sx={{
+              width: fitWindowSize(),
+              wordWrap: 'break-word',
+              margin: '0.5rem',
+            }}
+          >
+            {'Price: '}
+            {price}
+            {' '}
+            ETH
           </DialogContentText>
         </DialogContent>
         <DialogActions

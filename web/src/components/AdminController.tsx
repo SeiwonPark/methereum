@@ -17,7 +17,7 @@ export function AdminController() {
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
-  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS_1, ABIS.MARKET, provider.getSigner());
+  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
 
   const mintToken = async () => {
     try {

@@ -22,7 +22,7 @@ export function WalletInfo() {
   } = useWeb3React<Web3Provider>();
   const [ethBalance, setEthBalance] = useState<string>('0.0');
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS_1, ABIS.MARKET, provider.getSigner());
+  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
 
   const fetcher = (_library: any) => (...args: any) => {
     const [method, ...params] = args;

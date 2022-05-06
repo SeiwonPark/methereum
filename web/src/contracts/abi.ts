@@ -1,13 +1,11 @@
 export const ABIS = {
   /** For contract owner */
   NFT_TX_ADDRESS: '0xdaae273b5f59f2f8cf477f6ba18b2c0eec7c62e6',
-  /**
-   * For contract user
-   *
-   * Each postfix(Number) represents model's token ID
-   */
-  MARKET_TX_ADDRESS_1: '0x3b136c9e9a4b348a3f85b995ffa6168b8ac7cb03',
-  MARKET_TX_ADDRESS_2: '0xdf4246f06d014c2b8b27b690b1fad7f2cc63af57',
+  /** For contract user */
+  MARKET_TX_ADDRESS: {
+    1: { address: '0x3b136c9e9a4b348a3f85b995ffa6168b8ac7cb03' },
+    2: { address: '0xdf4246f06d014c2b8b27b690b1fad7f2cc63af57' },
+  },
   NFT: [
     {
       inputs: [
