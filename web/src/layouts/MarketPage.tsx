@@ -17,8 +17,8 @@ export function MarketPage() {
               tokenId={1}
               name="1st"
               description="asa"
-              path="./milkcow.glb"
-              position={[-10, 10, 20]}
+              path="./milkcow1.glb"
+              position={[-20, 10, 20]}
               rotation={[0, Math.PI, 0]}
               scale={2}
             />
@@ -27,7 +27,43 @@ export function MarketPage() {
               name="2nd"
               description="asa2"
               path="./milkcow2.glb"
-              position={[10, -10, -20]}
+              position={[-20, -10, -20]}
+              rotation={[0, Math.PI, 0]}
+              scale={2}
+            />
+            <Model
+              tokenId={3}
+              name="3rd"
+              description="asa"
+              path="./milkcow3.glb"
+              position={[30, 15, -5]}
+              rotation={[0, Math.PI, 0]}
+              scale={2}
+            />
+            <Model
+              tokenId={4}
+              name="4th"
+              description="asa2"
+              path="./milkcow4.glb"
+              position={[-20, -10, -20]}
+              rotation={[0, Math.PI, 0]}
+              scale={2}
+            />
+            <Model
+              tokenId={5}
+              name="5th"
+              description="asa"
+              path="./milkcow5.glb"
+              position={[-10, 20, -30]}
+              rotation={[0, Math.PI, 0]}
+              scale={2}
+            />
+            <Model
+              tokenId={6}
+              name="6th"
+              description="asa2"
+              path="./milkcow6.glb"
+              position={[15, -15, -15]}
               rotation={[0, Math.PI, 0]}
               scale={2}
             />
