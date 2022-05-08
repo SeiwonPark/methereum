@@ -3,7 +3,7 @@ import { Html } from '@react-three/drei';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,
 } from '@mui/material';
-import { Web3ReactProvider } from '@web3-react/core';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ethers } from 'ethers';
@@ -15,6 +15,8 @@ export interface DialogWindowProps {
   handleClose: (e?: MouseEvent | undefined) => void
 }
 
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
 const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
@@ -22,6 +24,8 @@ const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, AB
 export function DialogWindow({ handleClose }: DialogWindowProps) {
   const [owner, setOwner] = useState<string>('');
   const [price, setPrice] = useState<string>('0');
+  const [highestBidder, setHighestBidder] = useState<string>('0');
+  const [seller, setSeller] = useState<string>('0');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -42,27 +46,37 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
       descriptionElement.focus();
     }
 
-    const getHighestBid = async () => {
+    const getMarketInfo = async () => {
       if (modelId !== -1) {
-        await marketContract.highestBid()
+        await marketContract.getInfo()
           .then(async (result: any) => {
-            setPrice(ethers.utils.formatEther(result));
+            setPrice(ethers.utils.formatEther(result[1]));
+            if (result[2] === ZERO_ADDRESS) {
+              setHighestBidder('No one has bidded yet');
+            } else {
+              setHighestBidder(result[2]);
+            }
+            setSeller(result[5]);
           });
       }
     };
 
-    const getOwner = async () => {
+    const getNftInfo = async () => {
       if (modelId !== -1) {
-        await nftContract.ownerOf(modelId)
+        await nftContract.getInfo('0x3827C333746d83B0a59Da67F89710393c124E80c', modelId)
           .then(async (result: any) => {
-            setOwner(result);
-            if (result !== undefined && result !== null && result !== '') { await getHighestBid(); }
+            if (result[1] === ZERO_ADDRESS) {
+              setOwner('No one has bidded yet');
+            } else {
+              setOwner(result[1]);
+            }
+            if (result !== undefined && result !== null && result !== '') { await getMarketInfo(); }
           });
       }
     };
 
     /** no more than an await */
-    getOwner();
+    getNftInfo();
   }, [modelId]);
 
   return (
@@ -131,9 +145,21 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               margin: '0.5rem',
             }}
           >
+            {'Seller: '}
+            {seller}
+          </DialogContentText>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+            sx={{
+              width: fitWindowSize(),
+              wordWrap: 'break-word',
+              margin: '0.5rem',
+            }}
+          >
             {'Owner: '}
-            {owner.substring(0, 16)}
-            ...
+            {owner}
           </DialogContentText>
           <DialogContentText
             id="scroll-dialog-description"
@@ -154,6 +180,19 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
             {price}
             {' '}
             ETH)
+          </DialogContentText>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+            sx={{
+              width: fitWindowSize(),
+              wordWrap: 'break-word',
+              margin: '0.5rem',
+            }}
+          >
+            {'HighestBidder: '}
+            {highestBidder}
           </DialogContentText>
         </DialogContent>
         <DialogActions
