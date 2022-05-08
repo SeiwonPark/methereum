@@ -45,7 +45,7 @@ export function MarketPage() {
               name="4th"
               description="asa2"
               path="./milkcow4.glb"
-              position={[-20, -10, -20]}
+              position={[-10, -10, -20]}
               rotation={[0, Math.PI, 0]}
               scale={2}
             />

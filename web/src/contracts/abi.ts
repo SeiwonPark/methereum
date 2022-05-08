@@ -1,10 +1,14 @@
 export const ABIS = {
   /** For contract owner */
-  NFT_TX_ADDRESS: '0xdaae273b5f59f2f8cf477f6ba18b2c0eec7c62e6',
+  NFT_TX_ADDRESS: '0x385CF652D6679bA3a785BE7c2083019d5cE9C159',
   /** For contract user */
   MARKET_TX_ADDRESS: {
-    1: { address: '0x3b136c9e9a4b348a3f85b995ffa6168b8ac7cb03' },
-    2: { address: '0xdf4246f06d014c2b8b27b690b1fad7f2cc63af57' },
+    1: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    2: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    3: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    4: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    5: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    6: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
   },
   NFT: [
     {
@@ -35,25 +39,6 @@ export const ABIS = {
       inputs: [
         {
           internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-      ],
-      name: 'balanceOf',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
           name: 'from',
           type: 'address',
         },
@@ -71,6 +56,61 @@ export const ABIS = {
       name: 'customTransferFrom',
       outputs: [],
       stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'mint',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'operator',
+          type: 'address',
+        },
+        {
+          internalType: 'bool',
+          name: 'approved',
+          type: 'bool',
+        },
+      ],
+      name: 'setApprovalForAll',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+      ],
+      name: 'balanceOf',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      stateMutability: 'view',
       type: 'function',
     },
     {
@@ -96,7 +136,7 @@ export const ABIS = {
       inputs: [
         {
           internalType: 'address',
-          name: 'to',
+          name: 'owner',
           type: 'address',
         },
         {
@@ -105,9 +145,27 @@ export const ABIS = {
           type: 'uint256',
         },
       ],
-      name: 'mint',
-      outputs: [],
-      stateMutability: 'nonpayable',
+      name: 'getInfo',
+      outputs: [
+        {
+          components: [
+            {
+              internalType: 'uint256',
+              name: '_balance',
+              type: 'uint256',
+            },
+            {
+              internalType: 'address',
+              name: '_owner',
+              type: 'address',
+            },
+          ],
+          internalType: 'struct NFT.nftInfo',
+          name: 'i',
+          type: 'tuple',
+        },
+      ],
+      stateMutability: 'view',
       type: 'function',
     },
     {
@@ -127,24 +185,6 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'operator',
-          type: 'address',
-        },
-        {
-          internalType: 'bool',
-          name: 'approved',
-          type: 'bool',
-        },
-      ],
-      name: 'setApprovalForAll',
-      outputs: [],
-      stateMutability: 'nonpayable',
       type: 'function',
     },
   ],
@@ -281,6 +321,51 @@ export const ABIS = {
           internalType: 'bool',
           name: '',
           type: 'bool',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'getInfo',
+      outputs: [
+        {
+          components: [
+            {
+              internalType: 'uint256',
+              name: '_endAt',
+              type: 'uint256',
+            },
+            {
+              internalType: 'uint256',
+              name: '_highestBid',
+              type: 'uint256',
+            },
+            {
+              internalType: 'address',
+              name: '_highestBidder',
+              type: 'address',
+            },
+            {
+              internalType: 'bool',
+              name: '_started',
+              type: 'bool',
+            },
+            {
+              internalType: 'bool',
+              name: '_ended',
+              type: 'bool',
+            },
+            {
+              internalType: 'address',
+              name: '_seller',
+              type: 'address',
+            },
+          ],
+          internalType: 'struct Market.marketInfo',
+          name: 'i',
+          type: 'tuple',
         },
       ],
       stateMutability: 'view',

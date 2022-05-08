@@ -17,6 +17,13 @@ contract NFT {
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
+    /// @notice Set struct of NFT info
+    /// @dev Set struct in order to fetch data in one function call
+    struct nftInfo {
+        uint256 _balance;
+        address _owner;
+    }
+
     /// @notice Returns the number of tokens `owner` has
     /// @dev Fetches owner from stored state variable, `_owners`
     /// @param owner Given approved address
@@ -33,6 +40,25 @@ contract NFT {
     function ownerOf(uint256 nftId) public view returns (address owner) {
         owner = _owners[nftId];
         require(owner != address(0), "Token doesn't exist.");
+    }
+
+    /// @notice Gets the owner of NFT and the owner's balance
+    /// @dev This function returns in a tuple (balance, owner)
+    /// @param owner Given approved address
+    /// @param nftId NFT token ID
+    /// Throws unless given parameter `owner` is specified or approved.
+    function getInfo(address owner, uint256 nftId)
+        external
+        view
+        returns (nftInfo memory i)
+    {
+        i._owner = _owners[nftId];
+        require(
+            owner != address(0),
+            "Owner is not specified or token doesn't exist."
+        );
+        i._balance = _balances[owner];
+        return i;
     }
 
     function setApprovalForAll(address operator, bool approved) external {

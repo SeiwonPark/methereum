@@ -47,6 +47,15 @@ contract Market {
     uint256 public highestBid;
     mapping(address => uint256) public bids;
 
+    struct marketInfo {
+        uint256 _endAt;
+        uint256 _highestBid;
+        address _highestBidder;
+        bool _started;
+        bool _ended;
+        address _seller;
+    }
+
     /// @notice Configures Market contract with NFT contract
     /// @dev Initializing Market contract with deployed NFT contract
     /// @param _nft Deployed NFT address
@@ -87,7 +96,20 @@ contract Market {
         nft.customTransferFrom(msg.sender, address(this), nftId);
         started = true;
         ended = false;
-        endAt = block.timestamp + 7 days;
+        endAt = block.timestamp + 20 days;
+    }
+
+    /// @notice Gets the info of NFT market
+    /// @dev This function returns in a tuple (endAt, highestBid, highestBidder, started, ended, seller)
+    function getInfo() external view returns (marketInfo memory i) {
+        i._endAt = endAt;
+        i._highestBid = highestBid;
+        i._highestBidder = highestBidder;
+        i._started = started;
+        i._ended = ended;
+        i._seller = seller;
+
+        return i;
     }
 
     /// @notice Bids on the current NFT asset
