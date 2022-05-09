@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Alert, Button, CardContent, TextField,
 } from '@mui/material';
-import { ethers } from 'ethers';
-import { ABIS } from '../contracts/abi';
+import { nftContract, marketContract } from '../utils/ContractProvider';
 
 export function AdminController() {
   /** FIXME: too many states...? */
@@ -14,10 +13,7 @@ export function AdminController() {
   const [mintErrorMessage, setMintErrorMessage] = useState<string>('');
   const [approveErrorMessage, setApproveErrorMessage] = useState<string>('');
   const [approved, setApproved] = useState<boolean>(false);
-
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const nftContract = new ethers.Contract(ABIS.NFT_TX_ADDRESS, ABIS.NFT, provider.getSigner());
-  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
+  const [startId, setStartId] = useState<number>(0);
 
   const mintToken = async () => {
     try {
@@ -49,7 +45,19 @@ export function AdminController() {
 
   const start = async () => {
     try {
-      await marketContract.start();
+      await marketContract[startId].start();
+    } catch (err: any) {
+      setApproveErrorMessage(JSON.parse(JSON.stringify(err)).error.message);
+      setApproved(false);
+      setTimeout(() => {
+        setApproveErrorMessage('');
+      }, 3000);
+    }
+  };
+
+  const end = async () => {
+    try {
+      await marketContract[startId].end();
     } catch (err: any) {
       setApproveErrorMessage(JSON.parse(JSON.stringify(err)).error.message);
       setApproved(false);
@@ -192,7 +200,21 @@ export function AdminController() {
                 Approve
               </Button>
             </div>
-            {approved && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              <TextField
+                id="outlined-address-input"
+                label="NFT ID"
+                onChange={(e) => setStartId(Number(e.target.value))}
+                sx={{
+                  width: '250px',
+                  margin: '0.5rem',
+                }}
+              />
               <Button
                 size="medium"
                 variant="contained"
@@ -200,12 +222,24 @@ export function AdminController() {
                 sx={{
                   marginTop: '0.5rem',
                   marginBottom: '0.5rem',
-                  width: '80%',
+                  width: '100%',
                 }}
               >
                 Start
               </Button>
-            )}
+            </div>
+            <Button
+              size="medium"
+              variant="contained"
+              onClick={end}
+              sx={{
+                marginTop: '0.5rem',
+                marginBottom: '0.5rem',
+                width: '100%',
+              }}
+            >
+              End
+            </Button>
             {approveErrorMessage !== '' && (<Alert severity="error">{approveErrorMessage}</Alert>)}
           </div>
         </CardContent>

@@ -47,10 +47,13 @@ contract Market {
     uint256 public highestBid;
     mapping(address => uint256) public bids;
 
+    /// @notice Set struct of market info
+    /// @dev Set struct in order to fetch data in one function call
     struct marketInfo {
         uint256 _endAt;
         uint256 _highestBid;
         address _highestBidder;
+        uint256 _bids;
         bool _started;
         bool _ended;
         address _seller;
@@ -105,6 +108,11 @@ contract Market {
         i._endAt = endAt;
         i._highestBid = highestBid;
         i._highestBidder = highestBidder;
+        if (bids[msg.sender] != 0) {
+            i._bids = bids[msg.sender];
+        } else {
+            i._bids = 0;
+        }
         i._started = started;
         i._ended = ended;
         i._seller = seller;
@@ -146,7 +154,7 @@ contract Market {
     /// @notice Ends bidding and sets bid winner
     /// @dev Updates NFT info with the bid winner
     /// Throws unless current time passes the time, `endAt` and checks if it's ended
-    function end() external onStart(started) {
+    function end() external {
         require(started, "Auction has not started.");
         // require(block.timestamp >= endAt, "Auction has been over.");
         require(!ended, "Auction has been over.");

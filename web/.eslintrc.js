@@ -34,6 +34,7 @@ module.exports = {
     'react/require-default-props': 0,
     'react/no-unused-prop-types': 0,
     'react/jsx-filename-extension': [0],
+    'no-param-reassign': 0,
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never', jsx: 'never', ts: 'never', tsx: 'never', json: 'never',
     }],

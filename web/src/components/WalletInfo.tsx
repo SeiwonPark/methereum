@@ -9,7 +9,8 @@ import { useWeb3React } from '@web3-react/core';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { networkChainId } from '../utils/Connectors';
-import { ABIS } from '../contracts/abi';
+import { useStore } from '../hooks/useStore';
+import { marketContract } from '../utils/ContractProvider';
 
 export function WalletInfo() {
   const [title, setTitle] = useState('Copy to clipboard');
@@ -21,8 +22,7 @@ export function WalletInfo() {
     active, account, chainId, library,
   } = useWeb3React<Web3Provider>();
   const [ethBalance, setEthBalance] = useState<string>('0.0');
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, ABIS.MARKET, provider.getSigner());
+  const { modelId } = useStore();
 
   const fetcher = (_library: any) => (...args: any) => {
     const [method, ...params] = args;
@@ -43,7 +43,7 @@ export function WalletInfo() {
 
   const bid = async () => {
     try {
-      await marketContract.bid({ value: amount });
+      await marketContract[modelId].bid({ value: amount });
     } catch (err: any) {
       setErrorMessage(JSON.parse(JSON.stringify(err)).error.message);
       setTimeout(() => {

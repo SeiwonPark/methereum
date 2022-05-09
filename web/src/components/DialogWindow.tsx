@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Html } from '@react-three/drei';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,
+  Chip,
 } from '@mui/material';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ethers } from 'ethers';
@@ -23,9 +24,10 @@ const marketContract = new ethers.Contract(ABIS.MARKET_TX_ADDRESS[1].address, AB
 
 export function DialogWindow({ handleClose }: DialogWindowProps) {
   const [owner, setOwner] = useState<string>('');
-  const [price, setPrice] = useState<string>('0');
+  const [highestBid, setHighestBid] = useState<string>('0');
   const [highestBidder, setHighestBidder] = useState<string>('0');
   const [seller, setSeller] = useState<string>('0');
+  const [state, setState] = useState<string>('');
   const descriptionElementRef = useRef<HTMLElement>(null);
   const { clicked, modelId, modelDescription } = useStore();
 
@@ -50,13 +52,20 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
       if (modelId !== -1) {
         await marketContract.getInfo()
           .then(async (result: any) => {
-            setPrice(ethers.utils.formatEther(result[1]));
+            setHighestBid(ethers.utils.formatEther(result[1]));
             if (result[2] === ZERO_ADDRESS) {
               setHighestBidder('No one has bidded yet');
             } else {
               setHighestBidder(result[2]);
             }
-            setSeller(result[5]);
+            if (result[4] === true) {
+              setState('Auction is available');
+            } else if (result[5] === true) {
+              setState('Auction is ended');
+            } else {
+              setState('Need to start auction');
+            }
+            setSeller(result[6]);
           });
       }
     };
@@ -145,7 +154,8 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               margin: '0.5rem',
             }}
           >
-            {'Seller: '}
+            <Chip label="Seller" />
+            {' '}
             {seller}
           </DialogContentText>
           <DialogContentText
@@ -158,7 +168,8 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               margin: '0.5rem',
             }}
           >
-            {'Owner: '}
+            <Chip label="Owner" />
+            {' '}
             {owner}
           </DialogContentText>
           <DialogContentText
@@ -171,13 +182,14 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               margin: '0.5rem',
             }}
           >
-            {'Price: '}
-            {Number(price) * 1000000000000000000}
+            <Chip label="Highest Bid" />
+            {' '}
+            {Number(highestBid) * 1000000000000000000}
             {' '}
             Wei
             {' '}
             (
-            {price}
+            {highestBid}
             {' '}
             ETH)
           </DialogContentText>
@@ -191,8 +203,21 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
               margin: '0.5rem',
             }}
           >
-            {'HighestBidder: '}
+            <Chip label="Highest Bidder" />
+            {' '}
             {highestBidder}
+          </DialogContentText>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+            sx={{
+              width: fitWindowSize(),
+              wordWrap: 'break-word',
+              margin: '0.5rem',
+            }}
+          >
+            <Chip label={state} color="primary" />
           </DialogContentText>
         </DialogContent>
         <DialogActions

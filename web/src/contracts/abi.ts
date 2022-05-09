@@ -1,14 +1,14 @@
 export const ABIS = {
   /** For contract owner */
-  NFT_TX_ADDRESS: '0x385CF652D6679bA3a785BE7c2083019d5cE9C159',
+  NFT_TX_ADDRESS: '0x65e3df11027267b7f265ff5198ef4a976f0a2a72',
   /** For contract user */
   MARKET_TX_ADDRESS: {
-    1: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
-    2: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
-    3: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
-    4: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
-    5: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
-    6: { address: '0x389f52d89e7dffb9bf302b83033ee740610d0429' },
+    1: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    2: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    3: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    4: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    5: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    6: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
   },
   NFT: [
     {
@@ -39,6 +39,25 @@ export const ABIS = {
       inputs: [
         {
           internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+      ],
+      name: 'balanceOf',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
           name: 'from',
           type: 'address',
         },
@@ -56,61 +75,6 @@ export const ABIS = {
       name: 'customTransferFrom',
       outputs: [],
       stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'to',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: 'nftId',
-          type: 'uint256',
-        },
-      ],
-      name: 'mint',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'operator',
-          type: 'address',
-        },
-        {
-          internalType: 'bool',
-          name: 'approved',
-          type: 'bool',
-        },
-      ],
-      name: 'setApprovalForAll',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-      ],
-      name: 'balanceOf',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
       type: 'function',
     },
     {
@@ -171,6 +135,24 @@ export const ABIS = {
     {
       inputs: [
         {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'nftId',
+          type: 'uint256',
+        },
+      ],
+      name: 'mint',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
           internalType: 'uint256',
           name: 'nftId',
           type: 'uint256',
@@ -185,6 +167,24 @@ export const ABIS = {
         },
       ],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'operator',
+          type: 'address',
+        },
+        {
+          internalType: 'bool',
+          name: 'approved',
+          type: 'bool',
+        },
+      ],
+      name: 'setApprovalForAll',
+      outputs: [],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
   ],
@@ -346,6 +346,11 @@ export const ABIS = {
               internalType: 'address',
               name: '_highestBidder',
               type: 'address',
+            },
+            {
+              internalType: 'uint256',
+              name: '_bids',
+              type: 'uint256',
             },
             {
               internalType: 'bool',
