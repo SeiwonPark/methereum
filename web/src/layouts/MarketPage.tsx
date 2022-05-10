@@ -16,7 +16,7 @@ export function MarketPage() {
             <Model
               tokenId={1}
               name="1st"
-              description="asa"
+              description="1st Methereum NFT"
               path="./milkcow1.glb"
               position={[-20, 10, 20]}
               rotation={[0, Math.PI, Math.PI]}
@@ -25,7 +25,7 @@ export function MarketPage() {
             <Model
               tokenId={2}
               name="2nd"
-              description="asa2"
+              description="2nd Methereum NFT"
               path="./milkcow2.glb"
               position={[-20, -10, -20]}
               rotation={[0, Math.PI, 0]}
@@ -34,7 +34,7 @@ export function MarketPage() {
             <Model
               tokenId={3}
               name="3rd"
-              description="asa"
+              description="3rd Methereum NFT"
               path="./milkcow3.glb"
               position={[30, 15, -5]}
               rotation={[0, Math.PI, 0]}
@@ -43,7 +43,7 @@ export function MarketPage() {
             <Model
               tokenId={4}
               name="4th"
-              description="asa2"
+              description="4th Methereum NFT"
               path="./milkcow4.glb"
               position={[-10, -10, -20]}
               rotation={[0, Math.PI, 0]}
@@ -52,7 +52,7 @@ export function MarketPage() {
             <Model
               tokenId={5}
               name="5th"
-              description="asa"
+              description="5th Methereum NFT"
               path="./milkcow5.glb"
               position={[-10, 20, -30]}
               rotation={[0, Math.PI, 0]}
@@ -61,7 +61,7 @@ export function MarketPage() {
             <Model
               tokenId={6}
               name="6th"
-              description="asa2"
+              description="6th Methereum NFT"
               path="./milkcow6.glb"
               position={[15, -15, -15]}
               rotation={[0, Math.PI, 0]}
