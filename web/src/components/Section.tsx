@@ -11,7 +11,7 @@ import { YoutubeViewer } from './YoutubeViewer';
 export function Section() {
   const { height } = useThree((state) => state.viewport);
   const model = useGLTF('./milkcow1.glb');
-  const url = new URL('https://www.youtube.com/watch?v=DZUP4tkgEfk&list=LL&index=12');
+  const url = new URL('https://www.youtube.com/watch?v=RTBCpkOlmJk');
 
   useFrame(({ mouse, camera }) => {
     camera.position.x = THREE.MathUtils.lerp(camera.position.x, mouse.x * 0.7, 0.03);
