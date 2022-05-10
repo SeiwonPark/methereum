@@ -5,10 +5,10 @@ export const ABIS = {
   MARKET_TX_ADDRESS: {
     1: { address: '0xdc4261ca27edf4a8664f456f8d834e9afd4fa187' },
     2: { address: '0xf3873c7976d80b169dc70983b15eace45a9f0bb9' },
-    3: { address: '0xdc4261ca27edf4a8664f456f8d834e9afd4fa187' },
+    3: { address: '0x32b0ed37539b665a7e269a9149d1c8b55028d993' },
     4: { address: '0xdc4261ca27edf4a8664f456f8d834e9afd4fa187' },
     5: { address: '0xdc4261ca27edf4a8664f456f8d834e9afd4fa187' },
-    6: { address: '0xdc4261ca27edf4a8664f456f8d834e9afd4fa187' },
+    6: { address: '0xe6714e0e55a37cca5364e5c386b35208fccdb16e' },
   },
   NFT: [
     {
