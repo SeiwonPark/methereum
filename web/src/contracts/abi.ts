@@ -1,14 +1,14 @@
 export const ABIS = {
   /** For contract owner */
-  NFT_TX_ADDRESS: '0x65e3df11027267b7f265ff5198ef4a976f0a2a72',
+  NFT_TX_ADDRESS: '0x3cd1854fd7aae0ed52639964d5b75702cdc9a8b4',
   /** For contract user */
   MARKET_TX_ADDRESS: {
-    1: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
-    2: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
-    3: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
-    4: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
-    5: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
-    6: { address: '0xc426d62c617cc826cbefee27bc01f8441c331644' },
+    1: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
+    2: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
+    3: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
+    4: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
+    5: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
+    6: { address: '0x23097731931480f7b9172ff3e742a9c18ee3aa93' },
   },
   NFT: [
     {

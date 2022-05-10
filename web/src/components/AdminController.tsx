@@ -213,33 +213,36 @@ export function AdminController() {
                 sx={{
                   width: '250px',
                   margin: '0.5rem',
+                  height: '100%',
                 }}
               />
-              <Button
-                size="medium"
-                variant="contained"
-                onClick={start}
-                sx={{
-                  marginTop: '0.5rem',
-                  marginBottom: '0.5rem',
-                  width: '100%',
-                }}
-              >
-                Start
-              </Button>
+              <div>
+                <Button
+                  size="medium"
+                  variant="contained"
+                  onClick={start}
+                  sx={{
+                    marginTop: '0.5rem',
+                    marginBottom: '0.5rem',
+                    width: '100%',
+                  }}
+                >
+                  Start
+                </Button>
+                <Button
+                  size="medium"
+                  variant="contained"
+                  onClick={end}
+                  sx={{
+                    marginTop: '0.5rem',
+                    marginBottom: '0.5rem',
+                    width: '100%',
+                  }}
+                >
+                  End
+                </Button>
+              </div>
             </div>
-            <Button
-              size="medium"
-              variant="contained"
-              onClick={end}
-              sx={{
-                marginTop: '0.5rem',
-                marginBottom: '0.5rem',
-                width: '100%',
-              }}
-            >
-              End
-            </Button>
             {approveErrorMessage !== '' && (<Alert severity="error">{approveErrorMessage}</Alert>)}
           </div>
         </CardContent>

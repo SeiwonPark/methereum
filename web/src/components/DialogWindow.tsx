@@ -75,7 +75,7 @@ export function DialogWindow({ handleClose }: DialogWindowProps) {
         await nftContract.getInfo('0x3827C333746d83B0a59Da67F89710393c124E80c', modelId)
           .then(async (result: any) => {
             if (result[1] === ZERO_ADDRESS) {
-              setOwner('No one has bidded yet');
+              setOwner('No owners yet');
             } else {
               setOwner(result[1]);
             }

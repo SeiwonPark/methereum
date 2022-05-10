@@ -19,7 +19,7 @@ export function MarketPage() {
               description="asa"
               path="./milkcow1.glb"
               position={[-20, 10, 20]}
-              rotation={[0, Math.PI, 0]}
+              rotation={[0, Math.PI, Math.PI]}
               scale={2}
             />
             <Model

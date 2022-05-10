@@ -154,7 +154,7 @@ contract Market {
     /// @notice Ends bidding and sets bid winner
     /// @dev Updates NFT info with the bid winner
     /// Throws unless current time passes the time, `endAt` and checks if it's ended
-    function end() external {
+    function end() external onStart(started) {
         require(started, "Auction has not started.");
         // require(block.timestamp >= endAt, "Auction has been over.");
         require(!ended, "Auction has been over.");
